@@ -1,0 +1,46 @@
+[project]
+name = "fram-jules"
+version = "0.1.0a1"
+description = ""
+authors = [
+    {name = "The Norwegian Water Resources and Energy Directorate", email = "fram@nve.no"}
+]
+license = "LICENSE.md"
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "fram-core (>=0.1.0a1)",
+    "h5py (>=3.13.0)",
+    "numexpr (>=2.10.2)",
+    "pandas (>=2.2.3)",
+    "pyyaml (>=6.0.2,<7.0.0)",
+    "sympy (>=1.13.3)",
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+packages = [{include = "framjules"}]
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
+
+[tool.poetry.group.check]
+optional = true
+
+[tool.poetry.group.check.dependencies]
+ruff = "^0.9.9"
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.1"
+mkdocstrings-python = "^1.18.2"
+mkdocs-material = "^9.6.18"
+mike = "^2.1.3"
+mkdocs-macros-plugin = "^1.3.9"
+mkdocs-table-reader-plugin = "^3.1.0"
