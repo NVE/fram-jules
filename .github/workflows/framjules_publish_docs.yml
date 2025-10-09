@@ -1,0 +1,20 @@
+name: Deploy fram-jules Documentation
+
+on:
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - 'docs/**'
+#      - 'framjules/**'
+#      - 'mkdocs.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy-docs:
+    uses: ./.github/workflows/template_publish_docs.yml
+    permissions:
+      contents: write
+    with:
+      package_name: 'framjules'
+      source_paths: '["docs/**", "framjules/**", "mkdocs.yml"]'
