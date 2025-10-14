@@ -22,7 +22,7 @@
     
     
       
-        <title>Code Reference - FRAM JuLES</title>
+        <title>Reference - FRAM JuLES</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#code-reference" class="md-skip">
+        <a href="#reference" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Code Reference
+              Reference
             
           </span>
         </div>
@@ -262,7 +262,7 @@
   
   
   <span class="md-ellipsis">
-    Code Reference
+    Reference
     
   </span>
   
@@ -275,7 +275,7 @@
   
   
   <span class="md-ellipsis">
-    Code Reference
+    Reference
     
   </span>
   
@@ -3398,7 +3398,7 @@
   
 
 
-<h1 id="code-reference">Code Reference</h1>
+<h1 id="reference">Reference</h1>
 
 
 <div class="doc doc-object doc-module">
@@ -3558,8 +3558,7 @@
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">JulES</span><span class="p">(</span><span class="n">Solver</span><span class="p">):</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">JulES</span><span class="p">(</span><span class="n">Solver</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;JulES solver.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -3576,7 +3575,6 @@
         <span class="n">folder</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
         <span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># TODO: verify that market resolution is finer than storage</span>
 
         <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">_PROFILE_PERFORMANCE</span><span class="p">:</span>
@@ -5552,7 +5550,8 @@ term storage values every 3rd simulation step.</p>
 
               <details class="quote">
                 <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  6</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  5</span>
+<span class="normal">  6</span>
 <span class="normal">  7</span>
 <span class="normal">  8</span>
 <span class="normal">  9</span>
@@ -5928,8 +5927,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">379</span>
 <span class="normal">380</span>
 <span class="normal">381</span>
-<span class="normal">382</span>
-<span class="normal">383</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">JulESTimeResolution</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="normal">382</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">JulESTimeResolution</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Time resolution settings for JulES (only some are modifiable).&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -6212,7 +6210,7 @@ term storage values every 3rd simulation step.</p>
         <span class="n">short_days</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Find the valid configuration that is closest to the user supplied targets.&quot;&quot;&quot;</span>
-        <span class="c1"># TODO: Remove restriction in Julia-JulES and do more candidates here (e.g. small variation around target)</span>
+
         <span class="n">med_period</span> <span class="o">=</span> <span class="n">clearing_days</span> <span class="o">+</span> <span class="n">short_days</span>
 
         <span class="n">possible_med_pairs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_possible_med_pairs</span><span class="p">(</span><span class="n">med_period</span><span class="p">,</span> <span class="n">target_lookahead_days</span><span class="p">,</span> <span class="n">short_days</span><span class="p">)</span>
@@ -6339,7 +6337,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
+<span class="normal"> 9</span>
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
@@ -6373,8 +6372,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create instance with default values.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_target_med_days</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="mi">7</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_target_long_storage_days</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="mi">7</span>
@@ -6432,9 +6430,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">180</span>
-<span class="normal">181</span>
-<span class="normal">182</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_clearing_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_clearing_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get length of clearing problem in days.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clearing_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6459,9 +6457,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_clearing_market_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_clearing_market_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get market period length in clearing problem in minutes. Currently only support whole hours.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clearing_market_minutes</span>
 </code></pre></div></td></tr></table></div>
@@ -6486,9 +6484,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">212</span>
-<span class="normal">213</span>
-<span class="normal">214</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_clearing_storage_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_clearing_storage_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get storage period length in clearing problem in minutes. Currently only support whole hours.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clearing_storage_minutes</span>
 </code></pre></div></td></tr></table></div>
@@ -6513,7 +6511,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">258</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">257</span>
+<span class="normal">258</span>
 <span class="normal">259</span>
 <span class="normal">260</span>
 <span class="normal">261</span>
@@ -6534,8 +6533,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">276</span>
 <span class="normal">277</span>
 <span class="normal">278</span>
-<span class="normal">279</span>
-<span class="normal">280</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_content_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="normal">279</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_content_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return dict of all settings. Useful to get an overview.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;clearing_days&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clearing_days</span><span class="p">(),</span>
@@ -6580,11 +6578,11 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">252</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">251</span>
+<span class="normal">252</span>
 <span class="normal">253</span>
 <span class="normal">254</span>
-<span class="normal">255</span>
-<span class="normal">256</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ev_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="normal">255</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ev_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get number of days in horizon of end value problems.&quot;&quot;&quot;</span>
     <span class="n">target_horizon_days</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_target_ev_days</span><span class="p">()</span>
     <span class="n">long_period_days</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_long_storage_days</span><span class="p">()</span>
@@ -6611,9 +6609,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">224</span>
-<span class="normal">225</span>
-<span class="normal">226</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_adaptive_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_adaptive_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get number of market periods long prognosis problem.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_adaptive_blocks</span>
 </code></pre></div></td></tr></table></div>
@@ -6638,9 +6636,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_adaptive_hours</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_adaptive_hours</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get resolution in hours used in clustering of market period blocks in medium prognosis problem.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_adaptive_hours</span>
 </code></pre></div></td></tr></table></div>
@@ -6665,9 +6663,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get length of long prognosis problem in days.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6692,9 +6690,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_storage_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_storage_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get storage period length in long prognosis problem in days.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_storage_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6719,9 +6717,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_med_adaptive_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_med_adaptive_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get number of market periods long prognosis problem.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_med_adaptive_blocks</span>
 </code></pre></div></td></tr></table></div>
@@ -6746,9 +6744,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_med_adaptive_hours</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_med_adaptive_hours</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get resolution in hours used in clustering of market period blocks in medium prognosis problem.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_med_adaptive_hours</span>
 </code></pre></div></td></tr></table></div>
@@ -6773,9 +6771,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_med_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_med_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get length of medium prognosis problem in days.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_med_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6800,9 +6798,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_med_storage_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_med_storage_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get storage period length in medium prognosis problem in days.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_med_storage_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6827,9 +6825,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get length of short prognosis problem in days.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6854,9 +6852,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">216</span>
-<span class="normal">217</span>
-<span class="normal">218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_market_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_market_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get market period length in short prognosis problem in minutes. Currently only support whole hours.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_market_minutes</span>
 </code></pre></div></td></tr></table></div>
@@ -6881,9 +6879,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">220</span>
-<span class="normal">221</span>
-<span class="normal">222</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_storage_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_storage_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get storage period length in short prognosis problem in minutes. Currently only support whole hours.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_storage_minutes</span>
 </code></pre></div></td></tr></table></div>
@@ -6908,9 +6906,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">248</span>
-<span class="normal">249</span>
-<span class="normal">250</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_target_ev_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_target_ev_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get prefered value for horizon length of end value problem.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_ev_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6935,9 +6933,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">240</span>
-<span class="normal">241</span>
-<span class="normal">242</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_target_long_storage_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_target_long_storage_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get prefered value for long_storage_days.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_long_storage_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6962,9 +6960,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_target_lookahead_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_target_lookahead_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get target (minimum) length of prognosis problems in days.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_lookahead_days</span>
 </code></pre></div></td></tr></table></div>
@@ -6989,9 +6987,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">244</span>
-<span class="normal">245</span>
-<span class="normal">246</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_target_med_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_target_med_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get prefered value for horizon length of medium prognosis problem.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_med_days</span>
 </code></pre></div></td></tr></table></div>
@@ -7016,7 +7014,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">73</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
+<span class="normal">73</span>
 <span class="normal">74</span>
 <span class="normal">75</span>
 <span class="normal">76</span>
@@ -7041,8 +7040,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">95</span>
 <span class="normal">96</span>
 <span class="normal">97</span>
-<span class="normal">98</span>
-<span class="normal">99</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_clearing_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_clearing_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set length of clearing problem in days.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_type</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_int</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -7091,12 +7089,12 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">155</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
+<span class="normal">155</span>
 <span class="normal">156</span>
 <span class="normal">157</span>
 <span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_clearing_market_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">159</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_clearing_market_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set market period length in clearing problem in minutes. Currently only support whole hours.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_type</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_int</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -7124,11 +7122,11 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">162</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">161</span>
+<span class="normal">162</span>
 <span class="normal">163</span>
 <span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_clearing_storage_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">165</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_clearing_storage_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set storage period length in clearing problem in minutes. Currently only support whole hours.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_type</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_int</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -7155,7 +7153,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
+<span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
@@ -7180,8 +7179,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">123</span>
 <span class="normal">124</span>
 <span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_short_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">126</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_short_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set length of short term prognosis problem in days.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_type</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_int</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -7230,11 +7228,11 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">168</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">167</span>
+<span class="normal">168</span>
 <span class="normal">169</span>
 <span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_short_market_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">171</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_short_market_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set market period length in short prognosis problem in minutes. Currently only support whole hours.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_type</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_int</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -7261,11 +7259,11 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">174</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
+<span class="normal">174</span>
 <span class="normal">175</span>
 <span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_short_storage_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">177</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_short_storage_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set storage period length in short prognosis problem in minutes. Currently only support whole hours.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_type</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_int</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -7293,14 +7291,14 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
+<span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
 <span class="normal">50</span>
 <span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_target_ev_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_target_ev_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set prefered value for length in days of end value problems.</span>
 
 <span class="sd">    Will choose a close valid value.</span>
@@ -7331,14 +7329,14 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">55</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">54</span>
+<span class="normal">55</span>
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_target_long_storage_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_target_long_storage_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set prefered value for long_storage_days.</span>
 
 <span class="sd">    Will choose a close valid value.</span>
@@ -7370,7 +7368,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">129</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">128</span>
+<span class="normal">129</span>
 <span class="normal">130</span>
 <span class="normal">131</span>
 <span class="normal">132</span>
@@ -7393,8 +7392,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_target_lookahead_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_target_lookahead_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set target length of prognosis problems in days.</span>
 
 <span class="sd">    Will set med_days and long_days and make sure their sum is minimum this length.</span>
@@ -7442,14 +7440,14 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/JulESTimeResolution.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">64</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
+<span class="normal">64</span>
 <span class="normal">65</span>
 <span class="normal">66</span>
 <span class="normal">67</span>
 <span class="normal">68</span>
 <span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_target_med_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_target_med_days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set prefered value for horizon length in days in medium prognosis problem.</span>
 
 <span class="sd">    Will choose a close valid value.</span>
@@ -7876,7 +7874,7 @@ term storage values every 3rd simulation step.</p>
             <span class="s2">&quot;stateindex&quot;</span><span class="p">,</span>
             <span class="s2">&quot;storagevalues_main&quot;</span><span class="p">,</span>
             <span class="kc">True</span><span class="p">,</span>
-        <span class="p">),</span>  <span class="c1"># TODO: allow collecting different results from the same ids # noqa FIX002</span>
+        <span class="p">),</span>  
     <span class="p">]</span>
     <span class="n">_DEFAULT_INDEX</span> <span class="o">=</span> <span class="s2">&quot;priceindex&quot;</span>
 
@@ -7924,7 +7922,7 @@ term storage values every 3rd simulation step.</p>
 <span class="sd">            NDArray: Values for the vector id.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># TODO: Change output format in JuLES to save vectors, and read vectors one at a time. # noqa FIX002</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_id_exsists</span><span class="p">(</span><span class="n">vector_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_multiple_fields</span><span class="p">(</span><span class="n">vector_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">vector_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span>
@@ -8701,7 +8699,7 @@ term storage values every 3rd simulation step.</p>
 <span class="sd">        NDArray: Values for the vector id.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># TODO: Change output format in JuLES to save vectors, and read vectors one at a time. # noqa FIX002</span>
+
     <span class="bp">self</span><span class="o">.</span><span class="n">_id_exsists</span><span class="p">(</span><span class="n">vector_id</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_check_multiple_fields</span><span class="p">(</span><span class="n">vector_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">vector_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span>
@@ -8957,7 +8955,8 @@ term storage values every 3rd simulation step.</p>
 
               <details class="quote">
                 <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 13</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 12</span>
+<span class="normal"> 13</span>
 <span class="normal"> 14</span>
 <span class="normal"> 15</span>
 <span class="normal"> 16</span>
@@ -9332,8 +9331,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">385</span>
 <span class="normal">386</span>
 <span class="normal">387</span>
-<span class="normal">388</span>
-<span class="normal">389</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">JulESAggregator</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="normal">388</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">JulESAggregator</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">clearing</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span>
@@ -9831,7 +9829,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
+<span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
@@ -9860,8 +9859,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">clearing</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span>
     <span class="n">short</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Aggregator</span><span class="p">],</span>
@@ -10000,7 +9998,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">118</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">117</span>
+<span class="normal">118</span>
 <span class="normal">119</span>
 <span class="normal">120</span>
 <span class="normal">121</span>
@@ -10031,8 +10030,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">146</span>
 <span class="normal">147</span>
 <span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">assert_equal_storages</span><span class="p">(</span>
+<span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">assert_equal_storages</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">simpler_short</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Component</span><span class="p">],</span>
     <span class="n">simpler_medium</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Component</span><span class="p">],</span>
@@ -10087,9 +10085,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_term_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_term_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the aggregation map of Components from clearing to long term Model.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clearing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_medium</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -10114,7 +10112,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">104</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">103</span>
+<span class="normal">104</span>
 <span class="normal">105</span>
 <span class="normal">106</span>
 <span class="normal">107</span>
@@ -10125,8 +10124,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_term_graph_map</span><span class="p">(</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_term_graph_map</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">graph_clearing</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Component</span><span class="p">],</span>
     <span class="n">graph_long</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Component</span><span class="p">],</span>
@@ -10161,11 +10159,11 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">58</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
+<span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_term_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Model</span><span class="p">:</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_long_term_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Model</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply defined aggregations for long term Model.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_long_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_medium_term_model</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long</span><span class="p">)</span>
@@ -10192,9 +10190,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_medium_term_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_medium_term_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the aggregation map of Components from clearing to medium term Model.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clearing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_medium</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -10219,7 +10217,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 89</span>
+<span class="normal"> 90</span>
 <span class="normal"> 91</span>
 <span class="normal"> 92</span>
 <span class="normal"> 93</span>
@@ -10230,8 +10229,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal"> 98</span>
 <span class="normal"> 99</span>
 <span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_medium_term_graph_map</span><span class="p">(</span>
+<span class="normal">101</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_medium_term_graph_map</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">graph_clearing</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Component</span><span class="p">],</span>
     <span class="n">graph_medium</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Component</span><span class="p">],</span>
@@ -10266,11 +10264,11 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
 <span class="normal">53</span>
 <span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_medium_term_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Model</span><span class="p">:</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_medium_term_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Model</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply defined aggregations for medium term Model.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_medium_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_medium_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_short_term_model</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_medium</span><span class="p">)</span>
@@ -10297,9 +10295,9 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_term_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_term_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the aggregation map of Components from clearing to short term Model.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_aggregation_map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clearing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -10324,7 +10322,8 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">76</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">75</span>
+<span class="normal">76</span>
 <span class="normal">77</span>
 <span class="normal">78</span>
 <span class="normal">79</span>
@@ -10335,8 +10334,7 @@ term storage values every 3rd simulation step.</p>
 <span class="normal">84</span>
 <span class="normal">85</span>
 <span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_term_graph_map</span><span class="p">(</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_term_graph_map</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">graph_clearing</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Component</span><span class="p">],</span>
     <span class="n">graph_short</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Component</span><span class="p">],</span>
@@ -10371,11 +10369,11 @@ term storage values every 3rd simulation step.</p>
 
             <details class="quote">
               <summary>Source code in <code>framjules/solve_handler/JulESAggregator.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
+<span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_term_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Model</span><span class="p">:</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_short_term_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Model</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply defined aggregations for short term Model.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_short_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clearing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short</span><span class="p">)</span>
@@ -12062,7 +12060,7 @@ term storage values every 3rd simulation step.</p>
         <span class="k">assert</span> <span class="nb">all</span><span class="p">({</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}</span> <span class="o">==</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">is_node</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">is_flow</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">graph_infos</span><span class="o">.</span><span class="n">short_term</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="k">assert</span> <span class="nb">all</span><span class="p">({</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}</span> <span class="o">==</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">is_node</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">is_flow</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">graph_infos</span><span class="o">.</span><span class="n">medium_term</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="k">assert</span> <span class="nb">all</span><span class="p">({</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}</span> <span class="o">==</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">is_node</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">is_flow</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">graph_infos</span><span class="o">.</span><span class="n">long_term</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="c1"># TODO: add more checks</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">send_debug_event</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validation time: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">set_basic_node_flow_info</span><span class="p">(</span>
@@ -12223,9 +12221,9 @@ term storage values every 3rd simulation step.</p>
         <span class="n">is_aggregated</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">names</span><span class="p">:</span> <span class="n">JulESNames</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add jules ids in compliance with required format.&quot;&quot;&quot;</span>
-        <span class="c1"># Warning! Julia-JulES currently requires this format</span>
-        <span class="c1"># TODO: revise after removal of hard coding in Julia-JulES</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add jules ids in compliance with required format.</span>
+<span class="sd">        Warning! Julia-JulES currently requires this format &quot;&quot;&quot;</span>
+
         <span class="k">for</span> <span class="n">node_id</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">info</span><span class="o">.</span><span class="n">jules_global_eneq_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">names</span><span class="o">.</span><span class="n">GLOBALENEQ</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">node_id</span><span class="si">}</span><span class="s2">&quot;</span>
 
@@ -12339,7 +12337,7 @@ term storage values every 3rd simulation step.</p>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set global_energy_coefficient using metadata. Convert to usable unit.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">component_id</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="c1"># TODO: is_storage_node check is edge case due to module in dataset that can be removed (mod_11_96401_LINVASSELV)</span>
+
             <span class="k">if</span> <span class="ow">not</span> <span class="n">info</span><span class="o">.</span><span class="n">is_sss_member</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">info</span><span class="o">.</span><span class="n">is_storage_node</span><span class="p">:</span>
                 <span class="k">continue</span>
 
@@ -12349,7 +12347,7 @@ term storage values every 3rd simulation step.</p>
             <span class="n">scen_dim</span> <span class="o">=</span> <span class="n">AverageYearRange</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">num_years</span><span class="p">)</span>
 
             <span class="n">metakeys</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">component_id</span><span class="p">]</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">()</span>
-            <span class="k">if</span> <span class="s2">&quot;EnergyEqDownstream&quot;</span> <span class="ow">in</span> <span class="n">metakeys</span><span class="p">:</span>  <span class="c1"># TODO: Use same enekv_global everywhere</span>
+            <span class="k">if</span> <span class="s2">&quot;EnergyEqDownstream&quot;</span> <span class="ow">in</span> <span class="n">metakeys</span><span class="p">:</span>  
                 <span class="n">metadata</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">component_id</span><span class="p">]</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s2">&quot;EnergyEqDownstream&quot;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="s2">&quot;enekv_global&quot;</span> <span class="ow">in</span> <span class="n">metakeys</span><span class="p">:</span>
                 <span class="n">metadata</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">component_id</span><span class="p">]</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s2">&quot;enekv_global&quot;</span><span class="p">)</span>
@@ -12385,7 +12383,7 @@ term storage values every 3rd simulation step.</p>
 
             <span class="n">node</span><span class="p">:</span> <span class="n">Node</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
 
-            <span class="c1"># TODO: Remove except fallback after adding Node.get_initial_storage_percentage</span>
+
             <span class="n">percentage</span> <span class="o">=</span> <span class="mf">0.6</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">percentage</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_initial_storage_percentage</span><span class="p">()</span>
@@ -12416,7 +12414,7 @@ term storage values every 3rd simulation step.</p>
         <span class="n">data_dim</span><span class="p">:</span> <span class="n">FixedFrequencyTimeIndex</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get_data_period</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">data_dim</span><span class="o">.</span><span class="n">get_num_periods</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c1"># TODO: Assert is_simulation_mode_parallel:  Use first period</span>
+
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
         <span class="n">start_year</span><span class="p">,</span> <span class="n">num_years</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get_weather_years</span><span class="p">()</span>
@@ -13141,7 +13139,7 @@ term storage values every 3rd simulation step.</p>
     <span class="k">assert</span> <span class="nb">all</span><span class="p">({</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}</span> <span class="o">==</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">is_node</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">is_flow</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">graph_infos</span><span class="o">.</span><span class="n">short_term</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
     <span class="k">assert</span> <span class="nb">all</span><span class="p">({</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}</span> <span class="o">==</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">is_node</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">is_flow</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">graph_infos</span><span class="o">.</span><span class="n">medium_term</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
     <span class="k">assert</span> <span class="nb">all</span><span class="p">({</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}</span> <span class="o">==</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">is_node</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">is_flow</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">graph_infos</span><span class="o">.</span><span class="n">long_term</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-    <span class="c1"># TODO: add more checks</span>
+
     <span class="bp">self</span><span class="o">.</span><span class="n">send_debug_event</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validation time: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -13473,7 +13471,8 @@ term storage values every 3rd simulation step.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Add jules ids in compliance with required format.</p>
+        <p>Add jules ids in compliance with required format.
+Warning! Julia-JulES currently requires this format</p>
 
 
             <details class="quote">
@@ -13505,9 +13504,9 @@ term storage values every 3rd simulation step.</p>
     <span class="n">is_aggregated</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">names</span><span class="p">:</span> <span class="n">JulESNames</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add jules ids in compliance with required format.&quot;&quot;&quot;</span>
-    <span class="c1"># Warning! Julia-JulES currently requires this format</span>
-    <span class="c1"># TODO: revise after removal of hard coding in Julia-JulES</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add jules ids in compliance with required format.</span>
+<span class="sd">    Warning! Julia-JulES currently requires this format &quot;&quot;&quot;</span>
+
     <span class="k">for</span> <span class="n">node_id</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">info</span><span class="o">.</span><span class="n">jules_global_eneq_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">names</span><span class="o">.</span><span class="n">GLOBALENEQ</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">node_id</span><span class="si">}</span><span class="s2">&quot;</span>
 
@@ -13683,7 +13682,7 @@ term storage values every 3rd simulation step.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set global_energy_coefficient using metadata. Convert to usable unit.&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">component_id</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="c1"># TODO: is_storage_node check is edge case due to module in dataset that can be removed (mod_11_96401_LINVASSELV)</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="n">info</span><span class="o">.</span><span class="n">is_sss_member</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">info</span><span class="o">.</span><span class="n">is_storage_node</span><span class="p">:</span>
             <span class="k">continue</span>
 
@@ -13693,7 +13692,7 @@ term storage values every 3rd simulation step.</p>
         <span class="n">scen_dim</span> <span class="o">=</span> <span class="n">AverageYearRange</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">num_years</span><span class="p">)</span>
 
         <span class="n">metakeys</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">component_id</span><span class="p">]</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s2">&quot;EnergyEqDownstream&quot;</span> <span class="ow">in</span> <span class="n">metakeys</span><span class="p">:</span>  <span class="c1"># TODO: Use same enekv_global everywhere</span>
+        <span class="k">if</span> <span class="s2">&quot;EnergyEqDownstream&quot;</span> <span class="ow">in</span> <span class="n">metakeys</span><span class="p">:</span>  
             <span class="n">metadata</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">component_id</span><span class="p">]</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s2">&quot;EnergyEqDownstream&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="s2">&quot;enekv_global&quot;</span> <span class="ow">in</span> <span class="n">metakeys</span><span class="p">:</span>
             <span class="n">metadata</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">component_id</span><span class="p">]</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s2">&quot;enekv_global&quot;</span><span class="p">)</span>
@@ -13918,7 +13917,7 @@ term storage values every 3rd simulation step.</p>
 
         <span class="n">node</span><span class="p">:</span> <span class="n">Node</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
 
-        <span class="c1"># TODO: Remove except fallback after adding Node.get_initial_storage_percentage</span>
+
         <span class="n">percentage</span> <span class="o">=</span> <span class="mf">0.6</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">percentage</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_initial_storage_percentage</span><span class="p">()</span>
@@ -15046,7 +15045,7 @@ term storage values every 3rd simulation step.</p>
         <span class="k">if</span> <span class="n">dummy_timeindex</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">timevectors</span><span class="p">:</span>
             <span class="n">default_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dummy_timeindex</span><span class="o">.</span><span class="n">get_num_periods</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
             <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">default_vector</span><span class="p">,</span> <span class="n">default_vector</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">out</span><span class="o">=</span><span class="n">default_vector</span><span class="p">)</span>
-            <span class="c1"># TODO: Replace default_vector with derived vector (e.g. based on rhs) or user supplied vector</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">timevectors</span><span class="p">[</span><span class="n">dummy_timeindex</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">profile_id</span><span class="p">:</span> <span class="n">default_vector</span><span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">add_exogenous_nodes</span><span class="p">(</span>
@@ -15070,7 +15069,7 @@ term storage values every 3rd simulation step.</p>
                 <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Node </span><span class="si">{</span><span class="n">node_id</span><span class="si">}</span><span class="s2"> is exogenous but has not price.&quot;</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-            <span class="c1"># TODO: move to get_attribute_profile. applies to all profiles</span>
+
             <span class="k">if</span> <span class="n">price</span><span class="o">.</span><span class="n">has_profile</span><span class="p">():</span>
                 <span class="n">units</span> <span class="o">=</span> <span class="n">get_units_from_expr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="n">price</span><span class="o">.</span><span class="n">get_profile</span><span class="p">())</span>
                 <span class="k">if</span> <span class="n">units</span><span class="p">:</span>
@@ -15133,7 +15132,7 @@ term storage values every 3rd simulation step.</p>
         <span class="n">info</span><span class="p">:</span> <span class="n">ComponentInfo</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Append data elements related to a storage.&quot;&quot;&quot;</span>
-        <span class="c1"># TODO: Support soft bounds, storage loss</span>
+
         <span class="n">storage_id</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">jules_storage_id</span>
         <span class="n">balance_id</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">jules_balance_id</span>
 
@@ -15213,10 +15212,10 @@ term storage values every 3rd simulation step.</p>
         <span class="n">graph_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ComponentInfo</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Append arrow related data elements for each arrow in flow.&quot;&quot;&quot;</span>
-        <span class="c1"># TODO: Add support for SegmentedArrow</span>
+
         <span class="n">flow_info</span> <span class="o">=</span> <span class="n">graph_info</span><span class="p">[</span><span class="n">flow_id</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">arrow</span> <span class="ow">in</span> <span class="n">flow</span><span class="o">.</span><span class="n">get_arrows</span><span class="p">():</span>
-            <span class="k">assert</span> <span class="n">arrow</span><span class="o">.</span><span class="n">has_profile</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Not supported in MVP&quot;</span>  <span class="c1"># TODO</span>
+            <span class="k">assert</span> <span class="n">arrow</span><span class="o">.</span><span class="n">has_profile</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Currently not supported, will be implemented later&quot;</span>  
 
             <span class="n">arrow_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">flow_id</span><span class="si">}</span><span class="s2">_arrow_</span><span class="si">{</span><span class="n">arrow</span><span class="o">.</span><span class="n">get_node</span><span class="p">()</span><span class="si">}</span><span class="s2">-&gt;</span><span class="si">{</span><span class="n">flow_info</span><span class="o">.</span><span class="n">main_node_id</span><span class="si">}</span><span class="s2">&quot;</span>
 
@@ -15538,7 +15537,7 @@ the build phase.</p>
     <span class="k">if</span> <span class="n">dummy_timeindex</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">timevectors</span><span class="p">:</span>
         <span class="n">default_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dummy_timeindex</span><span class="o">.</span><span class="n">get_num_periods</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">default_vector</span><span class="p">,</span> <span class="n">default_vector</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">out</span><span class="o">=</span><span class="n">default_vector</span><span class="p">)</span>
-        <span class="c1"># TODO: Replace default_vector with derived vector (e.g. based on rhs) or user supplied vector</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">timevectors</span><span class="p">[</span><span class="n">dummy_timeindex</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">profile_id</span><span class="p">:</span> <span class="n">default_vector</span><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -15759,7 +15758,7 @@ the build phase.</p>
             <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Node </span><span class="si">{</span><span class="n">node_id</span><span class="si">}</span><span class="s2"> is exogenous but has not price.&quot;</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-        <span class="c1"># TODO: move to get_attribute_profile. applies to all profiles</span>
+
         <span class="k">if</span> <span class="n">price</span><span class="o">.</span><span class="n">has_profile</span><span class="p">():</span>
             <span class="n">units</span> <span class="o">=</span> <span class="n">get_units_from_expr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="n">price</span><span class="o">.</span><span class="n">get_profile</span><span class="p">())</span>
             <span class="k">if</span> <span class="n">units</span><span class="p">:</span>
@@ -15817,10 +15816,10 @@ the build phase.</p>
     <span class="n">graph_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ComponentInfo</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Append arrow related data elements for each arrow in flow.&quot;&quot;&quot;</span>
-    <span class="c1"># TODO: Add support for SegmentedArrow</span>
+
     <span class="n">flow_info</span> <span class="o">=</span> <span class="n">graph_info</span><span class="p">[</span><span class="n">flow_id</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">arrow</span> <span class="ow">in</span> <span class="n">flow</span><span class="o">.</span><span class="n">get_arrows</span><span class="p">():</span>
-        <span class="k">assert</span> <span class="n">arrow</span><span class="o">.</span><span class="n">has_profile</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Not supported in MVP&quot;</span>  <span class="c1"># TODO</span>
+        <span class="k">assert</span> <span class="n">arrow</span><span class="o">.</span><span class="n">has_profile</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Currently not supported, will be implemented later&quot;</span>  
 
         <span class="n">arrow_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">flow_id</span><span class="si">}</span><span class="s2">_arrow_</span><span class="si">{</span><span class="n">arrow</span><span class="o">.</span><span class="n">get_node</span><span class="p">()</span><span class="si">}</span><span class="s2">-&gt;</span><span class="si">{</span><span class="n">flow_info</span><span class="o">.</span><span class="n">main_node_id</span><span class="si">}</span><span class="s2">&quot;</span>
 
@@ -16179,7 +16178,7 @@ the build phase.</p>
     <span class="n">info</span><span class="p">:</span> <span class="n">ComponentInfo</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Append data elements related to a storage.&quot;&quot;&quot;</span>
-    <span class="c1"># TODO: Support soft bounds, storage loss</span>
+
     <span class="n">storage_id</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">jules_storage_id</span>
     <span class="n">balance_id</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">jules_balance_id</span>
 
@@ -20966,7 +20965,8 @@ different commodity than main node, such as for hydropower.</p>
 <span class="normal">261</span>
 <span class="normal">262</span>
 <span class="normal">263</span>
-<span class="normal">264</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SerialResultsHandler</span><span class="p">:</span>
+<span class="normal">264</span>
+<span class="normal">265</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SerialResultsHandler</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set serial simulation results.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
@@ -21031,7 +21031,7 @@ different commodity than main node, such as for hydropower.</p>
 
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">is_exogenous</span><span class="p">():</span>
-                    <span class="k">continue</span>  <span class="c1"># TODO: Fixed reservoirs</span>
+                    <span class="k">continue</span>  
                 <span class="bp">self</span><span class="o">.</span><span class="n">_set_node_results</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">loader</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Flow</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_set_flow_results</span><span class="p">(</span>
@@ -21099,7 +21099,7 @@ different commodity than main node, such as for hydropower.</p>
         <span class="n">volume</span><span class="o">.</span><span class="n">set_level</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
         <span class="n">volume</span><span class="o">.</span><span class="n">set_profile</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
 
-        <span class="c1"># TODO: improve h5 file in Julia-JulES to avoid this workaround</span>
+        <span class="c1"># temporary workaround, will be fixed in future versions</span>
         <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">arrow</span><span class="p">,</span> <span class="n">volume</span> <span class="ow">in</span> <span class="n">flow</span><span class="o">.</span><span class="n">get_arrow_volumes</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">arrow_node</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">.</span><span class="n">get_node</span><span class="p">()</span>
@@ -21133,12 +21133,13 @@ different commodity than main node, such as for hydropower.</p>
         <span class="n">is_flow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">is_stock</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Expr</span><span class="p">,</span> <span class="n">Expr</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decompose price vector into level and profile expressions.&quot;&quot;&quot;</span>
-        <span class="c1"># TODO: handle negative prices</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Decompose price vector into level and profile expressions.</span>
+<span class="sd">        Note! Support for negative proices will come in the next version. &quot;&quot;&quot;</span>
+
 
         <span class="n">timevector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_timevector</span><span class="p">(</span><span class="n">jules_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">loader</span><span class="p">)</span>
 
-        <span class="c1"># TODO: Clear cashe due to this? Do we need loader.clear_cache()</span>
+
         <span class="n">mean_value</span> <span class="o">=</span> <span class="n">timevector</span><span class="o">.</span><span class="n">get_vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">is_float32</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
         <span class="n">scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">mean_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">mean_value</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span>
@@ -21494,7 +21495,7 @@ different commodity than main node, such as for hydropower.</p>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">is_exogenous</span><span class="p">():</span>
-                <span class="k">continue</span>  <span class="c1"># TODO: Fixed reservoirs</span>
+                <span class="k">continue</span>  
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_node_results</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">loader</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Flow</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_flow_results</span><span class="p">(</span>
