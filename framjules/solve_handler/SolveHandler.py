@@ -298,7 +298,7 @@ class SolveHandler(Base):
         assert all({True, False} == {x.is_node, x.is_flow} for x in graph_infos.short_term.values())
         assert all({True, False} == {x.is_node, x.is_flow} for x in graph_infos.medium_term.values())
         assert all({True, False} == {x.is_node, x.is_flow} for x in graph_infos.long_term.values())
-        # TODO: add more checks
+
         self.send_debug_event(f"validation time: {round(time() - t, 2)} seconds")
 
     def set_basic_node_flow_info(
@@ -459,9 +459,9 @@ class SolveHandler(Base):
         is_aggregated: bool,
         names: JulESNames,
     ) -> None:
-        """Add jules ids in compliance with required format."""
-        # Warning! Julia-JulES currently requires this format
-        # TODO: revise after removal of hard coding in Julia-JulES
+        """Add jules ids in compliance with required format.
+        Warning! Julia-JulES currently requires this format """
+
         for node_id, info in out.items():
             info.jules_global_eneq_id = f"{names.GLOBALENEQ}_{node_id}"
 
@@ -575,7 +575,7 @@ class SolveHandler(Base):
     ) -> dict[str, float]:
         """Set global_energy_coefficient using metadata. Convert to usable unit."""
         for component_id, info in out.items():
-            # TODO: is_storage_node check is edge case due to module in dataset that can be removed (mod_11_96401_LINVASSELV)
+
             if not info.is_sss_member or not info.is_storage_node:
                 continue
 
@@ -585,7 +585,7 @@ class SolveHandler(Base):
             scen_dim = AverageYearRange(start_year, num_years)
 
             metakeys = graph[component_id].get_meta_keys()
-            if "EnergyEqDownstream" in metakeys:  # TODO: Use same enekv_global everywhere
+            if "EnergyEqDownstream" in metakeys:  
                 metadata = graph[component_id].get_meta("EnergyEqDownstream")
             elif "enekv_global" in metakeys:
                 metadata = graph[component_id].get_meta("enekv_global")
@@ -621,7 +621,7 @@ class SolveHandler(Base):
 
             node: Node = graph[node_id]
 
-            # TODO: Remove except fallback after adding Node.get_initial_storage_percentage
+
             percentage = 0.6
             try:
                 percentage = node.get_initial_storage_percentage()
@@ -652,7 +652,7 @@ class SolveHandler(Base):
         data_dim: FixedFrequencyTimeIndex = config.get_data_period()
 
         if data_dim.get_num_periods() > 1:
-            # TODO: Assert is_simulation_mode_parallel:  Use first period
+
             raise NotImplementedError
 
         start_year, num_years = config.get_weather_years()

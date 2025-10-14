@@ -26,7 +26,7 @@ class JulESH5TimeVectorLoader(FileLoader, TimeVectorLoader):
             "stateindex",
             "storagevalues_main",
             True,
-        ),  # TODO: allow collecting different results from the same ids # noqa FIX002
+        ),  
     ]
     _DEFAULT_INDEX = "priceindex"
 
@@ -74,7 +74,7 @@ class JulESH5TimeVectorLoader(FileLoader, TimeVectorLoader):
             NDArray: Values for the vector id.
 
         """
-        # TODO: Change output format in JuLES to save vectors, and read vectors one at a time. # noqa FIX002
+
         self._id_exsists(vector_id)
         self._check_multiple_fields(vector_id)
         if vector_id not in self._data:

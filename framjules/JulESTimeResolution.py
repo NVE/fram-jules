@@ -2,7 +2,6 @@ import math
 
 from framcore import Base
 
-# TODO: Storage period in clearing must go up in storage period in short. give error if not
 class JulESTimeResolution(Base):
     """Time resolution settings for JulES (only some are modifiable)."""
 
@@ -286,7 +285,7 @@ class JulESTimeResolution(Base):
         short_days: int,
     ) -> tuple[int, int, int, int]:
         """Find the valid configuration that is closest to the user supplied targets."""
-        # TODO: Remove restriction in Julia-JulES and do more candidates here (e.g. small variation around target)
+
         med_period = clearing_days + short_days
 
         possible_med_pairs = self._get_possible_med_pairs(med_period, target_lookahead_days, short_days)

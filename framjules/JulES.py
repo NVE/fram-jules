@@ -33,7 +33,6 @@ class JulES(Solver):
         folder: Path,
         model: Model,
     ) -> None:
-        # TODO: verify that market resolution is finer than storage
 
         t0 = time()
         if _PROFILE_PERFORMANCE:

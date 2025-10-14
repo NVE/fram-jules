@@ -90,7 +90,7 @@ class SerialResultsHandler:
 
             if isinstance(c, Node):
                 if c.is_exogenous():
-                    continue  # TODO: Fixed reservoirs
+                    continue  
                 self._set_node_results(c, name, loader)
             if isinstance(c, Flow):
                 self._set_flow_results(
@@ -158,7 +158,7 @@ class SerialResultsHandler:
         volume.set_level(level)
         volume.set_profile(profile)
 
-        # TODO: improve h5 file in Julia-JulES to avoid this workaround
+        # temporary workaround, will be fixed in future versions
         n = len(name)
         for arrow, volume in flow.get_arrow_volumes().items():
             arrow_node = arrow.get_node()
@@ -192,12 +192,13 @@ class SerialResultsHandler:
         is_flow: bool = False,
         is_stock: bool = False,
     ) -> tuple[Expr, Expr]:
-        """Decompose price vector into level and profile expressions."""
-        # TODO: handle negative prices
+        """ Decompose price vector into level and profile expressions.
+        Note! Support for negative proices will come in the next version. """
+
 
         timevector = self._get_timevector(jules_id=name, loader=loader)
 
-        # TODO: Clear cashe due to this? Do we need loader.clear_cache()
+
         mean_value = timevector.get_vector(self._config.is_float32()).mean()
 
         scale = float(1 / mean_value) if mean_value != 0 else 1.0

@@ -31,7 +31,7 @@ class ConfigHandler:
         config = self.get_default_config_dict()
         self._make_shrinkable(config)
         self.adapt_config_to_simulation_mode(config)
-        self.adapt_to_dataset(config)  # TODO: Remove if JulES does not require this after all
+        self.adapt_to_dataset(config)  
         self.config_assert_no_missings(config)
         self.write_config_file(config)
 
@@ -266,7 +266,8 @@ class ConfigHandler:
         }
 
     def _make_shrinkable(self, config: dict) -> None:
-        # TODO: make less hard coded
+        """Make long term horizon shrinkable if model year > 2 years.
+        Node! Method will be improved in future versions. """
         two_model_years = 364 * 2
         if self.config.get_time_resolution().get_long_days() < two_model_years:
             return
@@ -322,7 +323,7 @@ class ConfigHandler:
 
     def write_config_file(self, config: dict) -> None:
         """Write config.yml into folder."""
-        # TODO: Add comments behind each config name?
+
         with Path.open(self.folder / self.names.FILENAME_CONFIG, "w") as f:
             yaml.dump(config, f, indent=self.names.YAML_INDENT)
 
@@ -331,23 +332,21 @@ class ConfigHandler:
 
         If serial simulation, scenario time is used.
         If prognosis simulation, data time is used.
+
+        Note! Prognosis mode is not supported yet. Coming soon.
         """
         if self.config.is_simulation_mode_serial():
             return self.names.WEATHER_YEAR
-        # TODO add below when prognosis is supported:
-        # if self.config.is_simulation_mode_prognosis():
-        #     return self.names.DATA_YEAR
-        raise NotImplementedError
+        else:
+            raise NotImplementedError
 
     def _get_adaptive_horizon(self, clusters: int, unit_duration_hours: int) -> dict:
+        """ Return config dict for adaptive horizon."""
         n = self.names
         return {
             n.FUNCTION: n.ADAPTIVE_HORIZON,
             n.MACRO: n.STORAGE_SYSTEM,
             n.RHSDATA: {
-                # TODO: support user supplied variation
-                # n.FUNCTION: n.DYNAMIC_EXOGEN_PRICE_AH_DATA,
-                # n.BALANCE_RHSDATA: self.names.dummy_exogenous_balance_name,
                 n.FUNCTION: n.DYNAMIC_RHS_AH_DATA,
                 n.COMMODITY: n.MARKET,
             },

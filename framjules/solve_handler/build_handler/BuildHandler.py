@@ -262,7 +262,7 @@ class BuildHandler(Base, ABC):
         if dummy_timeindex not in self.timevectors:
             default_vector = np.arange(0, dummy_timeindex.get_num_periods(), 1, dtype=np.float64)
             np.divide(default_vector, default_vector.max(), out=default_vector)
-            # TODO: Replace default_vector with derived vector (e.g. based on rhs) or user supplied vector
+
             self.timevectors[dummy_timeindex] = {profile_id: default_vector}
 
     def add_exogenous_nodes(
@@ -286,7 +286,7 @@ class BuildHandler(Base, ABC):
                 message = f"Node {node_id} is exogenous but has not price."
                 raise RuntimeError(message)
 
-            # TODO: move to get_attribute_profile. applies to all profiles
+            
             if price.has_profile():
                 units = get_units_from_expr(self.db, price.get_profile())
                 if units:
@@ -349,7 +349,7 @@ class BuildHandler(Base, ABC):
         info: ComponentInfo,
     ) -> None:
         """Append data elements related to a storage."""
-        # TODO: Support soft bounds, storage loss
+
         storage_id = info.jules_storage_id
         balance_id = info.jules_balance_id
 
@@ -429,10 +429,10 @@ class BuildHandler(Base, ABC):
         graph_info: dict[str, ComponentInfo],
     ) -> None:
         """Append arrow related data elements for each arrow in flow."""
-        # TODO: Add support for SegmentedArrow
+
         flow_info = graph_info[flow_id]
         for arrow in flow.get_arrows():
-            assert arrow.has_profile() is False, "Not supported in MVP"  # TODO
+            assert arrow.has_profile() is False, "Currently not supported, will be implemented later"  
 
             arrow_id = f"{flow_id}_arrow_{arrow.get_node()}->{flow_info.main_node_id}"
 

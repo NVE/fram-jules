@@ -6,8 +6,7 @@ from framcore import Base, Model
 from framcore.aggregators import Aggregator
 from framcore.components import Component, Flow, Node
 
-# TODO: somehow check that storages are the same between short, medium and long term Models.
-# Probably need to do this in its own function after the aggregation maps for simpler components are created.
+
 
 
 class JulESAggregator(Base):
