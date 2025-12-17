@@ -172,7 +172,7 @@ class DataElementAppender:
         unit_param_id: str,
     ) -> None:
         """Append base rhs term data element."""
-        # TODO: Add residualhint
+        # TODO: Add residualhint # noqa FIX002
         self.data_elements.append(
             [
                 self.names.RHSTERM,
@@ -213,6 +213,19 @@ class DataElementAppender:
                 global_eneq_id,
                 [self.names.BALANCE, balance_id],
                 [self.names.VALUE, value],
+            ],
+        )
+
+    def storage_hint(self, storage_id: str, period: int) -> None:
+        """Append storage hint data element to indicate storage duration in milliseconds."""
+        storage_hint_id = f"StorageHint_{storage_id}"
+        self.data_elements.append(
+            [
+                self.names.METADATA,
+                self.names.STORAGEHINT,
+                storage_hint_id,
+                [self.names.STORAGE, storage_id],
+                [self.names.PERIOD, period],
             ],
         )
 

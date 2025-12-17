@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import timedelta
 
 from framcore import Model
 from framcore.components import Flow, Node
@@ -31,8 +32,10 @@ class ComponentInfo:
     is_flow: bool | None = None
     is_node: bool | None = None
     is_storage_node: bool | None = None
+    is_short_term_storage: bool | None = None  # used to find if the whole subsystem should be short term
     is_market_node: bool | None = None
     is_market_flow: bool | None = None
+    is_market_flow_to_exogenous: bool | None = None
     is_sss_member: bool | None = None
     is_exogenous: bool | None = None
 
@@ -46,6 +49,7 @@ class ComponentInfo:
     sss_market_commodity: str | None = None
     sss_members: set[str] | None = None
     sss_is_short_term: int | None = None
+    sss_storage_duration: timedelta | None = None
     sss_global_eneq_value: float | None = None
     sss_global_eneq_unit: str | None = None
     sss_initial_storage: float | None = None

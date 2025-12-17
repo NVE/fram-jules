@@ -31,18 +31,30 @@ class ConfigHandler:
         config = self.get_default_config_dict()
         self._make_shrinkable(config)
         self.adapt_config_to_simulation_mode(config)
-        self.adapt_to_dataset(config)  
+        self.adapt_to_dataset(config)
         self.config_assert_no_missings(config)
         self.write_config_file(config)
 
-    def is_clearing_only(self) -> bool:
-        """Return True if dataset has no subsystems."""
-        return all(not info.is_sss_member for info in self.graph_infos.clearing.values())
+    def is_exogenous_market(self) -> bool:
+        """Retrun True if all market flows that also are sss member, are connected to exogenous market nodes."""
+        for info in self.graph_infos.clearing.values():
+            if info.is_sss_member and info.is_market_flow and not info.is_market_flow_to_exogenous:
+                return False
+
+        return True
+
+    def has_subsystems(self) -> bool:
+        """Return True if dataset has subsystems."""
+        return any(info.is_sss_member for info in self.graph_infos.clearing.values())
 
     def is_short_term_only(self) -> bool:
         """Return True if dataset has only short term storage subsystems."""
         has_sss = any(info.is_sss_member for info in self.graph_infos.clearing.values())
-        no_long_term = all(info.is_sss_member and info.sss_is_short_term for info in self.graph_infos.clearing.values())
+        no_long_term = all(
+            info.sss_is_short_term
+            for info in self.graph_infos.clearing.values()
+            if info.is_sss_member and info.is_storage_node
+        )
         return has_sss and no_long_term
 
     def adapt_to_dataset(self, config: dict) -> None:
@@ -51,7 +63,14 @@ class ConfigHandler:
 
         settings = config[n.PY_JULES_SETTINGS_NAME]
 
-        if self.is_clearing_only():
+        if self.is_short_term_only() or (not self.has_subsystems()):  # remove long term storage horizon
+            settings[n.HORIZONS][n.COMMODITIES] = [n.MARKET]
+            for term in [n.CLEARING, n.SHORT, n.MED, n.LONG]:
+                del settings[n.HORIZONS][term][n.STORAGE_SYSTEM]
+            del settings[n.SUBSYSTEMS][n.LONG_EV_DURATION_DAYS]
+            del settings[n.SUBSYSTEMS][n.LONG_STOCH_DURATION_DAYS]
+
+        if not self.has_subsystems():  # only clearing problem
             del settings[n.SCENARIO_GENERATION]
             del settings[n.SUBSYSTEMS]
             for sub_key in list(settings[n.PROBLEMS].keys()):
@@ -59,22 +78,45 @@ class ConfigHandler:
                     del settings[n.PROBLEMS][sub_key]
             del settings[n.RESULTS][n.SCENARIOS]
             del settings[n.RESULTS][n.STORAGEVALUES]
-            settings[n.HORIZONS][n.COMMODITIES] = [n.MARKET]
             with contextlib.suppress(Exception):
                 for sub_key in list(settings[n.HORIZONS].keys()):
                     if sub_key not in [n.CLEARING, n.COMMODITIES]:
                         del settings[n.HORIZONS][sub_key]
-            with contextlib.suppress(Exception):
-                del settings[n.HORIZONS][n.CLEARING][n.STORAGE_SYSTEM]
             del settings[n.TIME][n.PROB_TIME][n.PHASE_IN_TIME]
             del settings[n.TIME][n.PROB_TIME][n.PHASE_IN_DELTA_STEPS]
             del settings[n.TIME][n.PROB_TIME][n.PHASE_IN_DELTA_DAYS]
 
-        elif self.is_short_term_only():
-            del settings[n.SCENARIO_GENERATION]
-            settings[n.HORIZONS][n.COMMODITIES] = [n.MARKET]
-            for term in [n.CLEARING, n.SHORT, n.MED, n.LONG]:
-                del settings[n.HORIZONS][term][n.STORAGE_SYSTEM]
+        elif self.is_exogenous_market():  # only exogenous market, run only stochastic model
+            del settings[n.SUBSYSTEMS]
+            for sub_key in list(settings[n.PROBLEMS].keys()):
+                if sub_key != n.STOCHASTIC:
+                    del settings[n.PROBLEMS][sub_key]
+            end_condition = n.START_EQUAL_STOP if self.is_short_term_only() else n.MONTHLY_PRICE
+            settings[n.PROBLEMS][n.STOCHASTIC][n.END_CONDITION] = end_condition
+
+            settings[n.HORIZONS][n.MASTER] = settings[n.HORIZONS][n.CLEARING]
+            if self.is_short_term_only():
+                settings[n.HORIZONS][n.SUB] = settings[n.HORIZONS][n.SHORT]
+            else:
+                settings[n.HORIZONS][n.SUB] = {
+                    n.TERM_DURATION_DAYS: self.config.get_time_resolution().get_ev_days(),
+                    n.HYDRO: {
+                        n.FUNCTION: n.SEQUENTIAL_HORIZON,
+                        n.PERIOD_DURATION_DAYS: self.config.get_time_resolution().get_long_storage_days(),
+                    },
+                    n.POWER: (
+                        self._get_adaptive_horizon(
+                            clusters=self.config.get_time_resolution().get_long_adaptive_blocks(),
+                            unit_duration_hours=self.config.get_time_resolution().get_long_adaptive_hours(),
+                        )
+                    ),
+                }
+                settings[n.HORIZONS][n.SUB][n.POWER][n.RHSDATA] = {
+                    n.FUNCTION: n.FIND_FIRST_DYNAMIC_EXOGEN_PRICE_AH_DATA,
+                }
+            for sub_key in list(settings[n.HORIZONS].keys()):
+                if sub_key not in [n.MASTER, n.SUB, n.COMMODITIES]:
+                    del settings[n.HORIZONS][sub_key]
 
         weather_year_start, num_scen_years = self.config.get_weather_years()
         weather_year_stop = weather_year_start + num_scen_years  # also check prognosis and evp scenarios
@@ -215,7 +257,7 @@ class ConfigHandler:
                         n.POWER: (
                             self._get_adaptive_horizon(
                                 clusters=self.config.get_time_resolution().get_med_adaptive_blocks(),
-                                unit_duration_hours=self.config.get_time_resolution().get_long_adaptive_hours(),
+                                unit_duration_hours=self.config.get_time_resolution().get_med_adaptive_hours(),
                             )
                             if self._has_exogenous_market_flows("medium_term")
                             else {
@@ -267,7 +309,9 @@ class ConfigHandler:
 
     def _make_shrinkable(self, config: dict) -> None:
         """Make long term horizon shrinkable if model year > 2 years.
-        Node! Method will be improved in future versions. """
+
+        Node! Method will be improved in future versions.
+        """
         two_model_years = 364 * 2
         if self.config.get_time_resolution().get_long_days() < two_model_years:
             return
@@ -323,7 +367,6 @@ class ConfigHandler:
 
     def write_config_file(self, config: dict) -> None:
         """Write config.yml into folder."""
-
         with Path.open(self.folder / self.names.FILENAME_CONFIG, "w") as f:
             yaml.dump(config, f, indent=self.names.YAML_INDENT)
 
@@ -337,11 +380,10 @@ class ConfigHandler:
         """
         if self.config.is_simulation_mode_serial():
             return self.names.WEATHER_YEAR
-        else:
-            raise NotImplementedError
+        raise NotImplementedError
 
     def _get_adaptive_horizon(self, clusters: int, unit_duration_hours: int) -> dict:
-        """ Return config dict for adaptive horizon."""
+        """Return config dict for adaptive horizon."""
         n = self.names
         return {
             n.FUNCTION: n.ADAPTIVE_HORIZON,

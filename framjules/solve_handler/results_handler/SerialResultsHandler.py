@@ -90,7 +90,7 @@ class SerialResultsHandler:
 
             if isinstance(c, Node):
                 if c.is_exogenous():
-                    continue  
+                    continue
                 self._set_node_results(c, name, loader)
             if isinstance(c, Flow):
                 self._set_flow_results(
@@ -109,6 +109,7 @@ class SerialResultsHandler:
         if info.is_market_node:
             level, profile = self._get_decomposed_level_profile(name, loader, self.units[name])
             price = node.get_price()
+            price.clear()
             price.set_level(level)
             price.set_profile(profile)
 
@@ -121,13 +122,17 @@ class SerialResultsHandler:
             )
             storage = node.get_storage()
             volume = storage.get_volume()
+            volume.clear()
             volume.set_level(level)
             volume.set_profile(profile)
 
             level, profile = self._get_decomposed_level_profile(
-                info.jules_storage_id + "_sv", loader, self.units[info.jules_storage_id + "_sv"]
+                info.jules_storage_id + "_sv",
+                loader,
+                self.units[info.jules_storage_id + "_sv"],
             )
             price = node.get_price()
+            price.clear()
             price.set_level(level)
             price.set_profile(profile)
 
@@ -155,6 +160,7 @@ class SerialResultsHandler:
                 is_flow=True,
             )
         volume = flow.get_volume()
+        volume.clear()
         volume.set_level(level)
         volume.set_profile(profile)
 
@@ -180,6 +186,7 @@ class SerialResultsHandler:
                     unit,
                     is_flow=True,
                 )
+                volume.clear()
                 volume.set_level(level)
                 volume.set_profile(profile)
                 break
@@ -192,12 +199,11 @@ class SerialResultsHandler:
         is_flow: bool = False,
         is_stock: bool = False,
     ) -> tuple[Expr, Expr]:
-        """ Decompose price vector into level and profile expressions.
-        Note! Support for negative proices will come in the next version. """
+        """Decompose result vector into level and profile expressions.
 
-
+        Note! Support for negative prices will come in the next version.
+        """
         timevector = self._get_timevector(jules_id=name, loader=loader)
-
 
         mean_value = timevector.get_vector(self._config.is_float32()).mean()
 
@@ -216,15 +222,28 @@ class SerialResultsHandler:
             reference_period = self._get_reference_period()
             profile_expr = ensure_expr(mean_one_profile_timevector, is_profile=True)
 
-        avg_level_timevector = ConstantTimeVector(
-            scalar=mean_value,
-            unit=unit,
-            is_max_level=False,
-            reference_period=reference_period,
-        )
+            level_timevector = ConstantTimeVector(
+                scalar=mean_value,
+                unit=unit,
+                is_max_level=False,
+                reference_period=reference_period,
+            )
+        else:
+            level_timevector = ConstantTimeVector(
+                scalar=0.0,
+                unit=unit,
+                is_max_level=True,
+            )
+            profile_expr = ensure_expr(
+                ConstantTimeVector(
+                    scalar=1.0,
+                    is_zero_one_profile=True,
+                ),
+                is_profile=True,
+            )
 
         level_expr = ensure_expr(
-            avg_level_timevector,
+            level_timevector,
             is_level=True,
             is_flow=is_flow,
             is_stock=is_stock,

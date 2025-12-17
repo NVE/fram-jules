@@ -42,11 +42,12 @@ class SerialRunHandler(JuliaModel):
             depot_path=self._config.get_julia_depot_path(),
             dependencies=dependencies,
             skip_install_dependencies=config.is_skip_install_dependencies(),
+            force_julia_install=config.get_force_julia_install(),
         )
 
     def run(self) -> None:
         """Run JulES in Series mode."""
-        data_year = self._config.get_data_period().get_start_time().year
+        data_year = self._config.get_data_period().get_start_time().isocalendar().year
         weather_year = self._config.get_weather_years()[0]
 
         config_path = self._folder / self._names.JULES_CONFIG

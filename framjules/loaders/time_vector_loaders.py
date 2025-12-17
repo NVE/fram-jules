@@ -26,7 +26,7 @@ class JulESH5TimeVectorLoader(FileLoader, TimeVectorLoader):
             "stateindex",
             "storagevalues_main",
             True,
-        ),  
+        ),
     ]
     _DEFAULT_INDEX = "priceindex"
 
@@ -74,7 +74,6 @@ class JulESH5TimeVectorLoader(FileLoader, TimeVectorLoader):
             NDArray: Values for the vector id.
 
         """
-
         self._id_exsists(vector_id)
         self._check_multiple_fields(vector_id)
         if vector_id not in self._data:

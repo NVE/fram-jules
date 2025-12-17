@@ -2,6 +2,7 @@ import math
 
 from framcore import Base
 
+
 class JulESTimeResolution(Base):
     """Time resolution settings for JulES (only some are modifiable)."""
 
@@ -285,7 +286,6 @@ class JulESTimeResolution(Base):
         short_days: int,
     ) -> tuple[int, int, int, int]:
         """Find the valid configuration that is closest to the user supplied targets."""
-
         med_period = clearing_days + short_days
 
         possible_med_pairs = self._get_possible_med_pairs(med_period, target_lookahead_days, short_days)

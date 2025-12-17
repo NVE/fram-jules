@@ -1,5 +1,3 @@
-"""Config object for JulES solver."""
-
 from __future__ import annotations
 
 from datetime import timedelta
@@ -14,7 +12,7 @@ _SUPPORTED_AGGREGATORS = [HydroAggregator]
 
 
 class JulESConfig(SolverConfig):
-    """Class containing all config for JulES."""
+    """Class containing all config for JulES. Subclass of SolverConfig."""
 
     def __init__(self) -> None:
         """Create new JulESConfig object."""
@@ -23,6 +21,7 @@ class JulESConfig(SolverConfig):
         self._julia_exe_path: Path | str | None = None
         self._julia_env_path: Path | str | None = None
         self._julia_depot_path: Path | str | None = None
+        self._force_julia_install: bool = True
 
         self._branch_jules: str | None = None
         self._branch_tulipa: str | None = None
@@ -47,7 +46,7 @@ class JulESConfig(SolverConfig):
         self._storage_resolution_medium_term = timedelta(days=7)
         self._storage_resolution_long_term = timedelta(days=28)
 
-        self._short_term_storage_cutoff_hours = 10
+        self._short_term_storage_cutoff_hours = 24 * 7
 
         self._debug_short_opt_solver = False
         self._debug_med_opt_solver = False
@@ -71,11 +70,15 @@ class JulESConfig(SolverConfig):
     def set_skipmax_days(self, days: int) -> None:
         """Set number of days between calculation of medium and long term storage values.
 
-        This can speed up a simulation. The cost is less good storage values. The longer between
+        This can speed up a simulation as medium and long term price prognosis problems, and long term
+        storage value problems are solved less often. The cost is less good storage values. The longer between
         re-calculation of storage values, the bigger negative impact on simulation result quality.
 
         If skipmax_days = 6 and clearing_days = 2, JulES will calculate medium and long
         term storage values every 3rd simulation step.
+
+        Short term price prognosis problems and storage values problems (i.e. for batteries) are not affected by this
+        setting, and are calculated every simulation step.
         """
         self._check_type(days, int)
         self._check_int(days, lower_bound=0, upper_bound=None)
@@ -93,18 +96,18 @@ class JulESConfig(SolverConfig):
         return self._skipmax_days
 
     def is_skip_install_dependencies(self) -> bool:
-        """Return True if install dependencies will be skipped during by JulES.solve."""
+        """Return True if install julia dependencies will be skipped during JulES.solve."""
         return self._skip_install_dependencies
 
     def activate_skip_install_dependencies(self) -> None:
-        """Tell JulES to not install dependencies, assuming they are already installed.
+        """Tell JulES to not install julia dependencies, assuming they are already installed.
 
         Default is to install.
         """
         self._skip_install_dependencies = True
 
     def deactivate_skip_install_dependencies(self) -> None:
-        """Tell JulES to install dependencies. (This is the default)."""
+        """Tell JulES to install julia dependencies. (This is the default)."""
         self._skip_install_dependencies = False
 
     def is_cache_db(self) -> bool:
@@ -124,15 +127,17 @@ class JulESConfig(SolverConfig):
         return self._time_resolution
 
     def get_short_term_storage_cutoff_hours(self) -> int:
-        """Return num hours.
+        """Return number of hours.
 
-        JulES will classify all storage subsystems with
-        max storage duration less than cutoff as short term storage.
+        JulES will classify all storage subsystems with max storage duration less than cutoff as short term subsystems.
         """
         return self._short_term_storage_cutoff_hours
 
     def set_jules_version(self, jules_branch: str | None = None, tulipa_branch: str | None = None) -> None:
-        """Set which git branch of JulES and/or TuLiPa to use."""
+        """Set which version of JulES and/or TuLiPa to use.
+
+        Can be a git branch name, or a local path to a git repo which will activate development mode.
+        """
         self._check_type(jules_branch, (str, type(None)))
         self._check_type(tulipa_branch, (str, type(None)))
         if jules_branch is not None:
@@ -143,11 +148,17 @@ class JulESConfig(SolverConfig):
             self._branch_tulipa = self._branch_jules
 
     def get_jules_version(self) -> str | None:
-        """Get JulES git branch."""
+        """Get JulES version.
+
+        Can be a git branch name, or a local path to a git repo for use in development mode.
+        """
         return self._branch_jules
 
     def get_tulipa_version(self) -> str | None:
-        """Get TuLiPa git branch."""
+        """Get TuLiPa git branch.
+
+        Can be a git branch name, or a local path to a git repo for use in development mode.
+        """
         return self._branch_tulipa
 
     def set_julia_depot_path(self, path: Path) -> None:
@@ -177,19 +188,30 @@ class JulESConfig(SolverConfig):
         """Get Julia installation being used."""
         return self._julia_exe_path
 
+    def set_force_julia_install(self, flag: bool) -> bool:
+        """Set bool for force new julia install."""
+        self._force_julia_install = flag
+
+    def get_force_julia_install(self) -> bool:
+        """Get bool for force new julia install."""
+        return self._force_julia_install
+
     def _check_supported_aggregators(self, aggregators: list[Aggregator]) -> None:
         for aggr in aggregators:
             if not isinstance(aggr, tuple(_SUPPORTED_AGGREGATORS)):
-                message = f"Aggregator of type {type(aggr)} is not supported in JulES. Supported types are: {_SUPPORTED_AGGREGATORS}"
+                message = (
+                    f"Aggregator of type {type(aggr)} is not supported in JulES.",
+                    f"Supported types are: {_SUPPORTED_AGGREGATORS}",
+                )
                 raise TypeError(message)
 
     def set_short_term_aggregations(self, aggregators: list[Aggregator]) -> None:
-        """Set aggregations to create the short term model from clearing (the Model object being solved)."""
+        """Set aggregations to create the short term model used in the price prognosis problems."""
         self._check_supported_aggregators(aggregators)
         self._short_term_aggregations = aggregators
 
     def get_short_term_aggregations(self) -> list[Aggregator]:
-        """Get aggregations to create the short term model from clearing (the Model object being solved)."""
+        """Get aggregations to create the short term model used in the price prognosis problems."""
         return self._short_term_aggregations
 
     """
@@ -199,6 +221,10 @@ class JulESConfig(SolverConfig):
     - More checks while building the optimization problem
     - If infeasible, solve the problem again with relaxed constraints (with penalties) and return the broken constraints
     - Outputs the optimization problem with variable and constraint names from FRAM
+    At the cost of performance, as JuMP_Prob is slower than HiGHS_Prob.
+
+    JulES will now automatically switch to JuMP_Prob if HiGHS_Prob fails, but these can still be used for testing
+    and debugging.
     """
 
     def set_debug_all_opt_solver(self, debug: bool) -> None:

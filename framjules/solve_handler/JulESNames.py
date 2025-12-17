@@ -49,7 +49,7 @@ class JulESNames:
     SHRINKATLEAST_DAYS = "shrinkatleast_days"
 
     TWO_STORAGE_DURATION = "twostorageduration"
-    SHORT_STOCH_DURATION_HOURS = "shorttermstoragecutoff_hours"
+    SHORT_STOCH_DURATION_HOURS = "shortstochduration_hours"
     LONG_STOCH_DURATION_DAYS = "longstochduration_days"
     LONG_EV_DURATION_DAYS = "longevduration_days"
 
@@ -123,6 +123,9 @@ class JulESNames:
     AGG_STARTMAG_DICT = "aggstartmagdict"
     STARTMAG_DICT = "startmagdict"
     RESIDUAL_AREA_LIST = "residualarealist"
+    END_CONDITION = "endcondition"
+    START_EQUAL_STOP = "startequalstop"
+    MONTHLY_PRICE = "monthly_price"
 
     SCENARIO_GENERATION = "scenariogeneration"
     INFLOW_CLUSTERING_METHOD = "InflowClusteringMethod"
@@ -146,6 +149,7 @@ class JulESNames:
     ONLY_AGG_HYDRO = "onlyagghydro"
     MASTER = "master"
     SUBS = "subs"
+    SUB = "sub"
 
     HORIZONS = "horizons"
     HORIZON_DURATION_WEEKS = "horizonduration_weeks"
@@ -155,6 +159,7 @@ class JulESNames:
     POWER_PARTS = "powerparts"
 
     RHSDATA = "rhsdata"
+    FIND_FIRST_DYNAMIC_EXOGEN_PRICE_AH_DATA = "FindFirstDynamicExogenPriceAHData"
     DYNAMIC_EXOGEN_PRICE_AH_DATA = "DynamicExogenPriceAHData"
     DYNAMIC_RHS_AH_DATA = "DynamicRHSAHData"
     RHSMETHOD = "rhsmethod"
@@ -253,6 +258,7 @@ class JulESNames:
     METADATA = "Metadata"
     GLOBALENEQ = "GlobalEneq"
     RESIDUALHINT = "Residualhint"
+    STORAGEHINT = "Storagehint"
 
     JULES_CONFIG = "config.yaml"
     OUTPUT_FOLDER = "output"

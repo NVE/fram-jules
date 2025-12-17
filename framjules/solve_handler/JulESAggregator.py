@@ -1,15 +1,24 @@
-# Rules which the given Aggregators must follow:
-# Storages must be the same in all aggregations
-
-
 from framcore import Base, Model
 from framcore.aggregators import Aggregator
 from framcore.components import Component, Flow, Node
 
 
-
-
 class JulESAggregator(Base):
+    """Class for defining and calculating aggregated Model instances based on a clearing Model.
+
+    In JulES, the clearing Model is the main Model we simulate and collect results from. JulES also has short,
+    medium and long term price prognosis problems, which needs aggregated Models to be solved efficiently.
+    This class helps create and manage these aggregated Models.
+
+    Note:
+        - Short term price prognosis Model is aggregated from a Clearing Model and a list of Aggregators.
+        - Medium term price prognosis Model is aggregated from the Short term Model and a list of Aggregators.
+        - Long term price prognosis Model is aggregated from the medium term Model and a list of Aggregators.
+        - Storages must be the same in all aggregations
+        - At the moment the short, medium, and long term Models are the same, du to limitations in JulES (TODO)
+
+    """
+
     def __init__(
         self,
         clearing: Model,
@@ -17,20 +26,13 @@ class JulESAggregator(Base):
         medium: list[Aggregator],
         long: list[Aggregator],
     ) -> None:
-        """Class for defining and calculation aggregated Model instances based on a clearing Model.
-
-        Creates three aggregated Model instances for short-, medium- and long-term simulation in JulES.
-
-        Note:
-            - Short term Model is aggregated from a Clearing Model.
-            - Medium term Model is aggregated from the Short term Model.
-            - Long term Model is aggregated from the medium term Model
+        """Initialize a JulESAggregator instance.
 
         Args:
             clearing (Model): The clearing Model to aggregate from.
-            short (list[Aggregator]): List of aggregations to create the short term Model from clearing.
-            medium (list[Aggregator]): List of aggregations to create the medium term Model from short
-            long (list[Aggregator]): List of aggregations to create the long term Model from medium.
+            short (list[Aggregator]): List of aggregations to create the short term price prognosis Model from clearing.
+            medium (list[Aggregator]): List of aggregations to create the medium term price prognosis Model from short
+            long (list[Aggregator]): List of aggregations to create the long term price prognosis Model from medium.
 
         """
         self._clearing = clearing

@@ -286,7 +286,6 @@ class BuildHandler(Base, ABC):
                 message = f"Node {node_id} is exogenous but has not price."
                 raise RuntimeError(message)
 
-            
             if price.has_profile():
                 units = get_units_from_expr(self.db, price.get_profile())
                 if units:
@@ -349,7 +348,6 @@ class BuildHandler(Base, ABC):
         info: ComponentInfo,
     ) -> None:
         """Append data elements related to a storage."""
-
         storage_id = info.jules_storage_id
         balance_id = info.jules_balance_id
 
@@ -362,7 +360,14 @@ class BuildHandler(Base, ABC):
         self.append.lower_zero_capacity(f"{storage_id}_lower_bound", info.is_flow, storage_id)
 
         if model_id == self.names.CLEARING:
-            self.append.global_eneq(info.jules_global_eneq_id, info.jules_balance_id, info.sss_global_eneq_value)
+            if info.sss_global_eneq_value is not None:
+                self.append.global_eneq(info.jules_global_eneq_id, info.jules_balance_id, info.sss_global_eneq_value)
+
+            if info.sss_is_short_term and info.is_short_term_storage:
+                self.append.storage_hint(
+                    storage_id,
+                    round(info.sss_storage_duration.total_seconds() * 1000),
+                )
 
     def add_rhs_term(
         self,
@@ -429,10 +434,9 @@ class BuildHandler(Base, ABC):
         graph_info: dict[str, ComponentInfo],
     ) -> None:
         """Append arrow related data elements for each arrow in flow."""
-
         flow_info = graph_info[flow_id]
         for arrow in flow.get_arrows():
-            assert arrow.has_profile() is False, "Currently not supported, will be implemented later"  
+            assert arrow.has_profile() is False, "Currently not supported, will be implemented later"
 
             arrow_id = f"{flow_id}_arrow_{arrow.get_node()}->{flow_info.main_node_id}"
 

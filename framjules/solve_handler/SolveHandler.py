@@ -247,17 +247,19 @@ class SolveHandler(Base):
 
         # NB! Order of below method calls matter
         t = time()
-        self.set_basic_node_flow_info(graph_infos.clearing, graphs.clearing)
-        self.set_basic_node_flow_info(graph_infos.short_term, graphs.short_term)
-        self.set_basic_node_flow_info(graph_infos.medium_term, graphs.medium_term)
-        self.set_basic_node_flow_info(graph_infos.long_term, graphs.long_term)
+        self.set_basic_node_flow_info(graph_infos.clearing, graphs.clearing, db, config)
+        self.set_basic_node_flow_info(graph_infos.short_term, graphs.short_term, db, config)
+        self.set_basic_node_flow_info(graph_infos.medium_term, graphs.medium_term, db, config)
+        self.set_basic_node_flow_info(graph_infos.long_term, graphs.long_term, db, config)
         self.send_debug_event(f"set_basic_node_flow_info time: {round(time() - t, 2)} seconds")
 
         t = time()
-        self.set_sss_info(graph_infos.clearing, graphs.clearing, names, config)
-        self.set_sss_info(graph_infos.short_term, graphs.short_term, names, config)
-        self.set_sss_info(graph_infos.medium_term, graphs.medium_term, names, config)
-        self.set_sss_info(graph_infos.long_term, graphs.long_term, names, config)
+        self.set_agg_storage_node_info(graph_infos.clearing, aggregator, graphs.clearing, graphs.short_term)
+        self.send_debug_event(f"set_agg_storage_node_info time: {round(time() - t, 2)} seconds")
+
+        t = time()  # opposite order to check if higher level is short term sss
+        self.set_sss_info(graphs.short_term, graph_infos.short_term, graph_infos.medium_term, names)
+        self.set_sss_info(graphs.clearing, graph_infos.clearing, graph_infos.short_term, names)
         self.send_debug_event(f"set_sss_info time: {round(time() - t, 2)} seconds")
 
         t = time()
@@ -267,10 +269,7 @@ class SolveHandler(Base):
         self.set_market_info(graph_infos.long_term, graphs.long_term, names)
         self.send_debug_event(f"set_market_info time: {round(time() - t, 2)} seconds")
 
-        t = time()
-        self.set_agg_storage_node_info(graph_infos.clearing, aggregator, graphs.clearing, graphs.short_term)
-        # self.set_agg_market_node_info(graph_infos.clearing, aggregator, graphs.clearing, graphs.medium_term)
-        self.send_debug_event(f"set_agg_storage_node_info time: {round(time() - t, 2)} seconds")
+        # self.set_agg_market_node_info(graph_infos.clearing, aggregator, graphs.clearing, graphs.short_term)
 
         t = time()
         self.set_jules_id_info(graph_infos.clearing, is_aggregated=False, names=names)
@@ -305,6 +304,8 @@ class SolveHandler(Base):
         self,
         out_graph_info: dict[str, ComponentInfo],
         graph: dict[str, Flow | Node],
+        db: QueryDB,
+        config: JulESConfig,
     ) -> None:
         """Info directly accessible from Node and Flow API.
 
@@ -313,102 +314,22 @@ class SolveHandler(Base):
         for component_id, c in graph.items():
             info = out_graph_info[component_id]
 
-            info.is_flow = isinstance(c, Flow)
             info.is_node = isinstance(c, Node)
-
-            info.is_exogenous = c.is_exogenous()
-
-            info.is_storage_node = isinstance(c, Node) and c.get_storage() is not None
-
             if info.is_node:
                 info.main_node_id = component_id
                 info.domain_commodity = c.get_commodity()
 
+            info.is_flow = isinstance(c, Flow)
             if info.is_flow:
                 info.main_node_id = c.get_main_node()
                 info.domain_commodity = graph[info.main_node_id].get_commodity()
                 info.num_arrows = len(c.get_arrows())
 
-    def set_sss_info(
-        self,
-        out_graph_info: dict[str, ComponentInfo],
-        graph: dict[str, Flow | Node],
-        names: JulESNames,
-        config: JulESConfig,
-    ) -> None:
-        """Storage SubSystem (sss) info."""
-        include_boundaries = False  # so market nodes at the boundary is not incorrectly classified
-        subsystems = get_one_commodity_storage_subsystems(graph, include_boundaries)
+            info.is_storage_node = isinstance(c, Node) and c.get_storage() is not None
+            if info.is_storage_node:
+                info.is_short_term_storage = False  # TODO: Should be based on storage duration # noqa FIX002
 
-        for info in out_graph_info.values():
-            info.has_storage_resolution = False
-
-        for subsystem_id, (__, subsystem, boundary_domain_commodities) in subsystems.items():
-            is_short_term = self.is_short_term_storage_subsystem(subsystem, graph, config)
-
-            jules_commodity = names.SHORT_TERM_STORAGE if is_short_term else names.STORAGE_SYSTEM
-
-            if len(boundary_domain_commodities) == 0:
-                message = (
-                    f"Warning! No boundary domain commodity found for storage subsystem {subsystem_id} "
-                    f"with members {subsystem}.\n"
-                )
-                print(message)
-                for component_id in subsystem:
-                    info = out_graph_info[component_id]
-                    info.jules_commodity = jules_commodity
-                continue
-            assert len(boundary_domain_commodities) == 1
-            market_commodity = next(iter(boundary_domain_commodities))
-
-            for component_id in subsystem:
-                info = out_graph_info[component_id]
-
-                info.is_sss_member = True
-
-                info.sss_id = subsystem_id
-                info.sss_is_short_term = is_short_term
-                info.sss_market_commodity = market_commodity
-                info.sss_members = subsystem
-
-                info.jules_commodity = jules_commodity
-
-            # all nodes in subsystem get True below since include_boundaries = False
-            # Flow get False if any arrow points to market commodity
-            assert include_boundaries is False
-            for component_id in subsystem:
-                component = graph[component_id]
-                info = out_graph_info[component_id]
-                info.has_storage_resolution = True
-                if isinstance(component, Flow):
-                    for arrow in component.get_arrows():
-                        node_id = arrow.get_node()
-                        node_info = out_graph_info[node_id]
-                        if node_info.jules_commodity == info.sss_market_commodity:
-                            info.has_storage_resolution = False
-                            break
-
-    def set_market_info(
-        self,
-        out_graph_info: dict[str, ComponentInfo],
-        graph: dict[str, Flow | Node],
-        names: JulESNames,
-    ) -> None:
-        """Set is_market_node and if so, also set jules_commodity to market."""
-        for component_id, info in out_graph_info.items():
-            info.is_market_node = info.is_node and not info.is_storage_node and not info.is_sss_member
-
-            if info.is_market_node:
-                info.jules_commodity = names.MARKET
-
-        for component_id, info in out_graph_info.items():
-            info.is_market_flow = False
-            if info.is_flow:
-                flow = graph[component_id]
-                for arrow in flow.get_arrows():
-                    if out_graph_info[arrow.get_node()].is_market_node:
-                        info.is_market_flow = True
-                        break
+            info.is_exogenous = c.is_exogenous()
 
     def set_agg_storage_node_info(
         self,
@@ -453,15 +374,123 @@ class SolveHandler(Base):
                 if info.is_market_node:
                     info.agg_market_node_id = agg_market_node_id
 
+    def set_sss_info(
+        self,
+        detailed_graph: dict[str, Flow | Node],
+        detailed_graph_info: dict[str, ComponentInfo],
+        agg_graph_info: dict[str, ComponentInfo] | None,
+        names: JulESNames,
+    ) -> None:
+        """Storage SubSystem (sss) info."""
+        include_boundaries = False  # so market nodes at the boundary is not incorrectly classified
+        subsystems = get_one_commodity_storage_subsystems(detailed_graph, include_boundaries)
+
+        for info in detailed_graph_info.values():
+            info.has_storage_resolution = False
+
+        for subsystem_id, (__, subsystem, boundary_domain_commodities) in subsystems.items():
+            is_short_term = self._is_short_term_storage_subsystem(subsystem, detailed_graph_info, agg_graph_info)
+
+            jules_commodity = names.SHORT_TERM_STORAGE if is_short_term else names.STORAGE_SYSTEM
+
+            if len(boundary_domain_commodities) == 0:
+                message = (
+                    f"Warning! No boundary domain commodity found for storage subsystem {subsystem_id} "
+                    f"with members {subsystem}.\n"
+                )
+                self.send_warning_event(message)
+                for component_id in subsystem:
+                    info = detailed_graph_info[component_id]
+                    info.jules_commodity = jules_commodity
+                continue
+            assert len(boundary_domain_commodities) == 1
+            market_commodity = next(iter(boundary_domain_commodities))
+
+            for component_id in subsystem:
+                info = detailed_graph_info[component_id]
+
+                info.is_sss_member = True
+
+                info.sss_id = subsystem_id
+                info.sss_is_short_term = is_short_term
+                info.sss_market_commodity = market_commodity
+                info.sss_members = subsystem
+
+                info.jules_commodity = jules_commodity
+
+            # all nodes in subsystem get True below since include_boundaries = False
+            # Flow get False if any arrow points to market commodity
+            assert include_boundaries is False
+            for component_id in subsystem:
+                component = detailed_graph[component_id]
+                info = detailed_graph_info[component_id]
+                info.has_storage_resolution = bool(not info.sss_is_short_term)
+                if isinstance(component, Flow):
+                    for arrow in component.get_arrows():
+                        node_id = arrow.get_node()
+                        node_info = detailed_graph_info[node_id]
+                        if node_info.jules_commodity == info.sss_market_commodity:
+                            info.has_storage_resolution = False
+                            break
+
+    def _is_short_term_storage_subsystem(
+        self,
+        subsystem: set[str],
+        detailed_graph_info: dict[str, ComponentInfo],
+        agg_graph_info: dict[str, ComponentInfo] | None,
+    ) -> bool:
+        """Return True if all storage nodes in subsystem are short term."""
+        for component_id in subsystem:
+            info = detailed_graph_info[component_id]
+            if info.is_storage_node and not info.is_short_term_storage:
+                return False
+        for component_id in subsystem:
+            info = detailed_graph_info[component_id]
+            if info.is_storage_node and info.agg_storage_node_id and agg_graph_info:
+                agg_info = agg_graph_info[info.agg_storage_node_id]
+                if not agg_info.is_short_term_storage:
+                    message = (
+                        f"Detailed storages in subsystem are short term but aggregated is not for {component_id}.",
+                        " Set storage system to long term. This is a limitation in JulES.jl where detailed and",
+                        " aggregated models must have the same storage system type to be able to interact.",
+                    )
+                    self.send_debug_event(message)
+                    return False
+        return True
+
+    def set_market_info(
+        self,
+        out_graph_info: dict[str, ComponentInfo],
+        graph: dict[str, Flow | Node],
+        names: JulESNames,
+    ) -> None:
+        """Set is_market_node and if so, also set jules_commodity to market."""
+        for component_id, info in out_graph_info.items():
+            info.is_market_node = info.is_node and not info.is_storage_node and not info.is_sss_member
+
+            if info.is_market_node:
+                info.jules_commodity = names.MARKET
+
+        for component_id, info in out_graph_info.items():
+            info.is_market_flow = False
+            info.is_market_flow_to_exogenous = False
+            if info.is_flow:
+                flow = graph[component_id]
+                for arrow in flow.get_arrows():
+                    node_info = out_graph_info[arrow.get_node()]
+                    if node_info.is_market_node:
+                        info.is_market_flow = True
+                        if node_info.is_exogenous:
+                            info.is_market_flow_to_exogenous = True
+                        break
+
     def set_jules_id_info(
         self,
         out: dict[str, ComponentInfo],
         is_aggregated: bool,
         names: JulESNames,
     ) -> None:
-        """Add jules ids in compliance with required format.
-        Warning! Julia-JulES currently requires this format """
-
+        """Add jules ids in compliance with required format. Warning! Julia-JulES currently requires this format."""
         for node_id, info in out.items():
             info.jules_global_eneq_id = f"{names.GLOBALENEQ}_{node_id}"
 
@@ -476,7 +505,7 @@ class SolveHandler(Base):
             elif info.is_node:
                 info.jules_balance_id = f"{info.jules_commodity}Balance_{node_id}"
 
-    def set_unit_info(
+    def set_unit_info(  # noqa: C901
         self,
         out: dict[str, ComponentInfo],
         graph: dict[str, Flow | Node],
@@ -575,8 +604,11 @@ class SolveHandler(Base):
     ) -> dict[str, float]:
         """Set global_energy_coefficient using metadata. Convert to usable unit."""
         for component_id, info in out.items():
-
             if not info.is_sss_member or not info.is_storage_node:
+                continue
+
+            if is_convertable(info.sss_global_eneq_unit, "1"):
+                info.sss_global_eneq_value = 1.0
                 continue
 
             data_dim: FixedFrequencyTimeIndex = config.get_data_period()
@@ -585,14 +617,11 @@ class SolveHandler(Base):
             scen_dim = AverageYearRange(start_year, num_years)
 
             metakeys = graph[component_id].get_meta_keys()
-            if "EnergyEqDownstream" in metakeys:  
+            if "EnergyEqDownstream" in metakeys:
                 metadata = graph[component_id].get_meta("EnergyEqDownstream")
-            elif "enekv_global" in metakeys:
-                metadata = graph[component_id].get_meta("enekv_global")
             else:
                 message = (
-                    f"Missing metadata EnergyEqDownstream or enekv_global for {component_id}, "
-                    f"only metadata keys {list(metakeys)}."
+                    f"Missing metadata EnergyEqDownstream for {component_id}, only metadata keys {list(metakeys)}."
                 )
                 message = message + f" Object info: {info}"
                 raise ValueError(message)
@@ -621,12 +650,11 @@ class SolveHandler(Base):
 
             node: Node = graph[node_id]
 
-
-            percentage = 0.6
             try:
-                percentage = node.get_initial_storage_percentage()
+                percentage = node.get_storage().get_initial_storage_percentage()
                 assert 0 <= percentage <= 1
             except Exception:
+                percentage = 0.6
                 self.send_warning_event(
                     f"Missing initial storage for {node_id}. Using 60 % of capacity.",
                 )
@@ -652,7 +680,6 @@ class SolveHandler(Base):
         data_dim: FixedFrequencyTimeIndex = config.get_data_period()
 
         if data_dim.get_num_periods() > 1:
-
             raise NotImplementedError
 
         start_year, num_years = config.get_weather_years()
@@ -686,8 +713,8 @@ class SolveHandler(Base):
             if agg.sss_initial_storage is None:
                 agg.sss_initial_storage = 0.0
 
-            agg.sss_initial_storage += det.sss_global_eneq_value * det.sss_initial_storage
+            add_value = det.sss_initial_storage
+            if det.sss_global_eneq_value:
+                add_value *= det.sss_global_eneq_value
 
-    def is_short_term_storage_subsystem(self, subsystem: set[str], graph: NodeFlowGraphs, config: JulESConfig) -> bool:
-        """Return True if is_short_term_storage_system."""
-        return False
+            agg.sss_initial_storage += add_value
